@@ -2,8 +2,8 @@ var path = require('path'),
     hapi = require('hapi'),
     good = require('good'),
     server = new hapi.Server(3000),
-    routes = require('./server/routes'),
-    db = require('./server/services/db');
+    routes = require('./routes'),
+    db = require('./services/db');
 
 console.log('Attempting to connect to MongoDB via Mongoose...');
 db.connect(function(valid) {
@@ -39,12 +39,6 @@ db.connect(function(valid) {
                     });
 
                     routes.registerRoutes(server);
-                    server.views({
-                        engines: {
-                            html: require('handlebars')
-                        },
-                        path: path.join(__dirname, 'server/views')
-                    });
 
                     server.start(function() {
                         server.log('info', 'Server running at: ' + server.info.uri);

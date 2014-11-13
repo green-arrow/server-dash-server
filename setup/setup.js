@@ -4,8 +4,8 @@
  * available widgets.
  */
 var bcrypt = require('bcrypt'),
-    User = require('../server/models/user'),
-    Widget = require('../server/models/widget');
+    User = require('../models/user'),
+    Widget = require('../models/widget');
 
 console.log('Running server-dash application setup.');
 
