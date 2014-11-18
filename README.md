@@ -2,11 +2,11 @@
 
 A customizable dashboard to monitor your Linux server.
 
-Base application / template taken from https://github.com/green-arrow/ember-sails
+This is the NodeJS server component of the server-dash application.
 
 ## Prerequisites
 
-To use this application, you need to have NodeJS and MongoDB installed.
+To run the server, you need to have NodeJS and MongoDB installed.
 
 ### Homebrew
 
@@ -46,25 +46,23 @@ brew install mongodb
 Clone the application
 
 ```
-git clone git@github.com:green-arrow/server-dash.git
+git clone git@github.com:green-arrow/server-dash-server.git
 ```
 
 Install dependencies
 
 ```
-cd server-dash
-npm install && bower install
+cd server-dash-server
+npm install
 ```
 
 ### Run the application
 
 By default this will be located at ``http://localhost:3000/``.
 
-This requires two parts, running ``gulp`` to build the application and ``node app.js`` to run the node server.
-I generally like to keep two tabs open in terminal, one for node and one for gulp.
-
-The default gulp task will watch your files for changes, build when changes occur, and execute live-reload
-(look for the Chrome live-reload extension for this :) ).
+```
+node app.js
+```
 
 ### Defaults
 
@@ -74,7 +72,7 @@ Email: admin@localhost
 
 Password: Adm!n
 
-These credentials will be displayed in the console window after starting the application for the first time.
+These credentials will be displayed in the console window after starting the application for the first time. You will need to follow the instructions on [server-dash-client](https://github.com/green-arrow/server-dash-client) to get the Ember web application up and running.
 
 ### Forcing Setup
 
