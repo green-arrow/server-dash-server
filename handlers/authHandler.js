@@ -10,8 +10,6 @@ module.exports = {
         var email = request.payload.email,
             password = request.payload.password;
 
-        console.log('Processing login for ' + email);
-
         UserService.validateByEmail(email, password, function(err, user) {
             if(err) {
                 if(err.serverError) {
@@ -25,7 +23,7 @@ module.exports = {
                     user: user
                 });
 
-                reply({ userId: user.id, firstLogin: user.firstLogin });
+                reply({ user: user });
             }
         });
     },

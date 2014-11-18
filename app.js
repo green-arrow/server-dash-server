@@ -1,7 +1,12 @@
 var path = require('path'),
     hapi = require('hapi'),
     good = require('good'),
-    server = new hapi.Server(3000),
+    server = new hapi.Server(3000, {
+        cors: {
+            origin: [ 'http://localhost:4200' ],
+            credentials: true
+        }
+    }),
     routes = require('./routes'),
     db = require('./services/db');
 

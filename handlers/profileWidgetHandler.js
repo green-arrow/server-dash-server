@@ -20,8 +20,7 @@ module.exports = {
     },
     update: function(request, reply) {
         var profileWidgetId = request.params.id;
-
-        ProfileWidgetService.update(profileWidgetId, request.body.profileWidget, function(err, profileWidget) {
+        ProfileWidgetService.update(profileWidgetId, request.payload.profileWidget, function(err, profileWidget) {
             if(err) {
                 if(err.serverError) {
                     reply({ errors: err.messages }).code(500);

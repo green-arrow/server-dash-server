@@ -1,23 +1,11 @@
 var authHandler = require('../handlers/authHandler'),
-    mainHandler = require('../handlers/mainHandler'),
     profileHandler = require('../handlers/profileHandler'),
     profileWidgetHandler = require('../handlers/profileWidgetHandler'),
     userHandler = require('../handlers/userHandler'),
     widgetHandler = require('../handlers/widgetHandler');
 
 module.exports.registerRoutes = function(server) {
-    /* Static files */
-    server.route({
-        method: 'GET',
-        path: '/assets/{param*}',
-        handler: {
-            directory: {
-                path: 'dist'
-            }
-        }
-    });
-
-    /* Authentication */
+/* Authentication */
     server.route({
         method: 'GET',
         path: '/api/session/logout',
@@ -43,6 +31,18 @@ module.exports.registerRoutes = function(server) {
     });
 
     /* RESTful API */
+    server.route({
+        method: 'GET',
+        path: '/api/users/current',
+        handler: userHandler.findCurrent,
+        config: {
+            auth: {
+                mode: 'try',
+                strategy: 'session'
+            }
+        }
+    });
+
     server.route({
         method: 'GET',
         path: '/api/users/{id}',
@@ -131,18 +131,5 @@ module.exports.registerRoutes = function(server) {
         config: {
             auth: 'session'
         }
-    });
-
-    /* Main application */
-    server.route({
-        method: 'GET',
-        path: '/{path*}',
-        config: {
-            auth: {
-                mode: 'try',
-                strategy: 'session'
-            }
-        },
-        handler: mainHandler.index
     });
 };

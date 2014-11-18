@@ -1,6 +1,25 @@
 var UserService = require('../services/userService');
 
 module.exports = {
+    findCurrent: function(request, reply) {
+        if(request.auth.credentials.user && request.auth.credentials.user.id) {
+            UserService.findById(request.auth.credentials.user.id, function(err, user) {
+                if(err) {
+                    if(err.serverError) {
+                        reply({ errors: err.messages }).code(500);
+                    } else {
+                        reply({ errors: err.messages }).code(400);
+                    }
+                } else {
+                    reply({
+                        user: user
+                    });
+                }
+            });
+        } else {
+            reply().statusCode(404);
+        }
+    },
     findOne: function(request, reply) {
         UserService.findById(request.params.id, function(err, user) {
             if(err) {
