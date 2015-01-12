@@ -5,6 +5,7 @@ var sanitize = function(obj){
     obj.id = obj._id.toString();
     delete obj._id;
     delete obj.__v;
+    delete obj.lastUpdatedDate;
 
     if(obj.widget && obj.widget._id) {
         obj.widget.id = obj.widget._id;

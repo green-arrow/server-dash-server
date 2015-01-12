@@ -6,6 +6,7 @@ var sanitize = function(obj){
     delete obj._id;
     delete obj.__v;
     delete obj.password;
+    delete obj.lastUpdatedDate;
 
     return obj;
 };
