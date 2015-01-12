@@ -41,8 +41,8 @@ exports.getUserProfiles = function(userId, callback) {
 
 var _generateUserProfiles = function(userId, callback) {
     var objectId = require('mongoose').Schema.ObjectId,
-        availableProfiles = require('../../setup/profiles.js'),
-        profileWidgetLookup = require('../../setup/profileWidgets.js'),
+        availableProfiles = require('../setup/profiles.js'),
+        profileWidgetLookup = require('../setup/profileWidgets.js'),
         dbProfiles = [], dbProfileWidgets = [], dbProfile, dbProfileWidget, sortOrder,
         error = {
             serverError: false,

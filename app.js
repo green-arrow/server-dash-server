@@ -1,14 +1,26 @@
 var path = require('path'),
     hapi = require('hapi'),
     good = require('good'),
-    server = new hapi.Server(3000, {
+    server = new hapi.Server(),
+    routes = require('./routes'),
+    db = require('./services/db'),
+    goodOptions = {
+        opsInterval: 1000,
+        reporters: [{
+            reporter: require('good-console'),
+            args:[{ log: '*', response: '*' }]
+        }]
+    };
+
+server.connection({
+    port: 3000,
+    routes: {
         cors: {
             origin: [ 'http://localhost:4200' ],
             credentials: true
         }
-    }),
-    routes = require('./routes'),
-    db = require('./services/db');
+    }
+});
 
 console.log('Attempting to connect to MongoDB via Mongoose...');
 db.connect(function(valid) {
@@ -30,9 +42,14 @@ db.connect(function(valid) {
             setup.widgetSetup(function() {
 
                 // Setup server
-                server.pack.register([good, require('hapi-auth-cookie')], function(err) {
-                    if(err) {
-                        throw err; // plugin failed
+                server.register([{
+                    register: require('good'),
+                    options: goodOptions
+                }, {
+                    register: require('hapi-auth-cookie')
+                }], function (err) {
+                    if (err) {
+                        throw err;
                     }
 
                     server.auth.strategy('session', 'cookie', {
@@ -45,8 +62,8 @@ db.connect(function(valid) {
 
                     routes.registerRoutes(server);
 
-                    server.start(function() {
-                        server.log('info', 'Server running at: ' + server.info.uri);
+                    server.start(function () {
+                        server.log('info', 'Server started at ' + server.info.uri);
                     });
                 });
             });
